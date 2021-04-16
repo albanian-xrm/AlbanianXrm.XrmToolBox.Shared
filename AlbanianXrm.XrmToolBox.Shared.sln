@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlbanianXrm.XrmToolBox.Shared", "AlbanianXrm.XrmToolBox.Shared\AlbanianXrm.XrmToolBox.Shared.csproj", "{53A0B324-AFBD-479B-B5E9-C2E3C5E3E077}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlbanianXrm.XrmToolBox.ExampleTool", "AlbanianXrm.XrmToolBox.ExampleTool\AlbanianXrm.XrmToolBox.ExampleTool.csproj", "{18ABE67A-41C8-4BF2-90A0-CF7580B0E5EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53A0B324-AFBD-479B-B5E9-C2E3C5E3E077}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A0B324-AFBD-479B-B5E9-C2E3C5E3E077}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A0B324-AFBD-479B-B5E9-C2E3C5E3E077}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A0B324-AFBD-479B-B5E9-C2E3C5E3E077}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18ABE67A-41C8-4BF2-90A0-CF7580B0E5EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18ABE67A-41C8-4BF2-90A0-CF7580B0E5EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18ABE67A-41C8-4BF2-90A0-CF7580B0E5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18ABE67A-41C8-4BF2-90A0-CF7580B0E5EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26A0F211-2F82-4623-A067-910E745FF571}
+	EndGlobalSection
+EndGlobal
