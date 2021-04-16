@@ -2,50 +2,44 @@
 
 namespace AlbanianXrm.XrmToolBox.Shared
 {
-    internal class BackgroundWorkProgressBase
+    internal class BackgroundWorkProgress<TProgress>
     {
-        public BackgroundWorkProgressBase() : this(null)
+        public bool Finished { get; set; }
+
+        public BackgroundWorkProgress() : this(null)
         {
         }
 
-        public BackgroundWorkProgressBase(Exception exception)
+        public BackgroundWorkProgress(Exception exception)
         {
             this.Result = new BackgroundWorkResult(exception);
             this.Finished = true;
         }
-
-        public bool Finished { get; set; }
-
-        public BackgroundWorkResult Result { get; set; }
-    }
-
-    internal class BackgroundWorkProgress<TProgress> : BackgroundWorkProgressBase
-    {
-        public BackgroundWorkProgress() : base() { }
-        public BackgroundWorkProgress(Exception exception) : base(exception) { }
 
         public BackgroundWorkProgress(TProgress progress)
         {
             this.Progress = progress;
             this.Finished = false;
         }
+        public BackgroundWorkResult Result { get; set; }
+
 
         public TProgress Progress { get; set; }
     }
 
-    internal class BackgroundWork2Base<T>
+    internal class BackgroundWorkBase<T>
     {
-        public BackgroundWork2Base() : this(null)
+        public BackgroundWorkBase() : this(null)
         {
         }
 
-        public BackgroundWork2Base(Exception exception)
+        public BackgroundWorkBase(Exception exception)
         {
             this.Result = new BackgroundWorkResult<T>(exception);
             this.Finished = true;
         }
 
-        public BackgroundWork2Base(T value)
+        public BackgroundWorkBase(T value)
         {
             this.Result = new BackgroundWorkResult<T>(value);
             this.Finished = true;
@@ -56,15 +50,61 @@ namespace AlbanianXrm.XrmToolBox.Shared
         public BackgroundWorkResult<T> Result { get; set; }
     }
 
-    internal class BackgroundWork2Progress<T, TProgress> : BackgroundWork2Base<T>
+    internal class BackgroundWorkBase<T, TValue>
     {
-        public BackgroundWork2Progress(): base() { }
+        public BackgroundWorkBase() { }
 
-        public BackgroundWork2Progress(Exception e): base(e) { }
+        public BackgroundWorkBase(T argument) : this(argument, null)
+        {
+        }
 
-        public BackgroundWork2Progress(T value) : base(value) { }
+        public BackgroundWorkBase(T argument, Exception exception)
+        {
+            this.Result = new BackgroundWorkResult<T, TValue>(argument, exception);
+            this.Finished = true;
+        }
 
-        public BackgroundWork2Progress(TProgress progress)
+        public BackgroundWorkBase(T argument, TValue value)
+        {
+            this.Result = new BackgroundWorkResult<T, TValue>(argument, value);
+            this.Finished = true;
+        }
+
+        public bool Finished { get; set; }
+
+        public BackgroundWorkResult<T, TValue> Result { get; set; }
+    }
+
+    internal class BackgroundWorkProgress<T, TProgress> : BackgroundWorkBase<T>
+    {
+        public BackgroundWorkProgress() : base() { }
+
+        public BackgroundWorkProgress(Exception e) : base(e) { }
+
+        public BackgroundWorkProgress(T value) : base(value) { }
+
+        public BackgroundWorkProgress(TProgress progress)
+        {
+            this.Progress = progress;
+            this.Finished = false;
+        }
+
+        public TProgress Progress { get; set; }
+    }
+
+    internal class BackgroundWorkProgress<T, TValue, TProgress> : BackgroundWorkBase<T, TValue>
+    {
+     
+
+        public BackgroundWorkProgress(T argument) : this(argument, null)
+        {
+        }
+
+        public BackgroundWorkProgress(T argument, Exception exception) : base(argument, exception) { }
+
+        public BackgroundWorkProgress(T argument, TValue value) : base(argument, value) { }
+
+        public BackgroundWorkProgress(TProgress progress)
         {
             this.Progress = progress;
             this.Finished = false;

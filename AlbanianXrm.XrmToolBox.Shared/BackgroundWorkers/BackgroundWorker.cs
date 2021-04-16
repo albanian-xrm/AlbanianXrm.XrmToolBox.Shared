@@ -22,10 +22,10 @@ namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
             }
             catch (Exception e)
             {
-                progress.Report(new BackgroundWork2Base<TResult>(e));
+                progress.Report(new BackgroundWorkBase<TResult>(e));
                 return;
             }
-            progress.Report(new BackgroundWork2Base<TResult>(result));
+            progress.Report(new BackgroundWorkBase<TResult>(result));
             return;
         }
     }

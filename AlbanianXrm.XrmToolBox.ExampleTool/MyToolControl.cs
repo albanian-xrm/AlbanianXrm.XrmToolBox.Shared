@@ -25,9 +25,14 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
             AsyncWorkHandler = new BackgroundWorkHandler(this, toolViewModel);
         }
 
-        private void btnSyncAction_Click(object sender, EventArgs e)
+        private void btnSyncI0R0W_Click(object sender, EventArgs e)
         {
-            AsyncWorkHandler.QueueWork<string>($"Working Async {++numberOfClicks}", Work, Progress, WorkEnded);
+            AsyncWorkHandler.EnqueueWork<string>($"Working Async {++numberOfClicks}", Work, Progress, WorkEnded);
+        }
+
+        private void btnSyncI1R0W_Click(object sender, EventArgs e)
+        {
+            AsyncWorkHandler.EnqueueWork<string, string>($"Working Async {++numberOfClicks}", Work, "input", Progress, WorkEnded2);
         }
 
         private void Work(Reporter<string> reporter)
@@ -35,6 +40,20 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
             reporter.ReportProgress("started");
             Thread.Sleep(5000);
             reporter.ReportProgress("ending");
+        }
+
+        private void Work(string arg, Reporter<string> reporter)
+        {
+            System.Diagnostics.Debug.WriteLine("background " + arg);
+            reporter.ReportProgress("started");
+            Thread.Sleep(5000);
+            reporter.ReportProgress("ending");
+        }
+
+        private void WorkEnded2(BackgroundWorkResult<string, object> result)
+        {
+            System.Diagnostics.Debug.WriteLine(result.Argument);
+            listBox1.Items.Add("ended");
         }
 
         private void WorkEnded(BackgroundWorkResult result)
@@ -54,9 +73,11 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
             listBox1.Items.Add(progress);
         }
 
-        private void btnAsyncAction_Click(object sender, EventArgs e)
+        private void btnAsyncI0R0W_Click(object sender, EventArgs e)
         {
-            AsyncWorkHandler.QueueWork<string>($"Working Async {++numberOfClicks}", WorkAsync, Progress);
+            AsyncWorkHandler.EnqueueAsyncWork<string>($"Working Async {++numberOfClicks}", WorkAsync, Progress);
         }
+
+       
     }
 }

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
 {
-    internal class BackgroundWorkerFunc<T, TResult> : BackgroundWorkerAbstract<TResult>
+    internal class BackgroundWorkerFunc<T, TResult> : BackgroundWorkerFuncAbstract<T, TResult>
     {
-        public Func<T,TResult> Work { get; internal set; }
+        public Func<T, TResult> Work { get; internal set; }
 
         public T Argument { get; set; }
 
@@ -24,10 +24,10 @@ namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
             }
             catch (Exception e)
             {
-                progress.Report(new BackgroundWork2Base<TResult>(e));
+                progress.Report(new BackgroundWorkBase<T, TResult>(Argument, e));
                 return;
             }
-            progress.Report(new BackgroundWork2Base<TResult>(result));
+            progress.Report(new BackgroundWorkBase<T, TResult>(Argument, result));
             return;
         }
     }

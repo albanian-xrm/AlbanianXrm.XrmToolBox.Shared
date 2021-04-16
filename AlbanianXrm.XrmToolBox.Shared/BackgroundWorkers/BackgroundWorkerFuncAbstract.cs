@@ -2,17 +2,17 @@
 
 namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
 {
-    internal abstract class BackgroundWorkerAbstract<TResult> : BackgroundWorkerBase
+    internal abstract class BackgroundWorkerFuncAbstract<T, TResult> : BackgroundWorkerBase
     {
-        protected readonly IProgress<BackgroundWorkBase<TResult>> progress;
-        public Action<BackgroundWorkResult<TResult>> WorkFinished { get; set; }
+        protected readonly IProgress<BackgroundWorkBase<T, TResult>> progress;
+        public Action<BackgroundWorkResult<T,TResult>> WorkFinished { get; set; }
 
-        public BackgroundWorkerAbstract()
+        public BackgroundWorkerFuncAbstract()
         {
-            progress = new Progress<BackgroundWorkBase<TResult>>(InternalProgress);
+            progress = new Progress<BackgroundWorkBase<T, TResult>>(InternalProgress);
         }
 
-        private void InternalProgress(BackgroundWorkBase<TResult> state)
+        private void InternalProgress(BackgroundWorkBase<T, TResult> state)
         {
             if (state.Finished)
             {

@@ -27,7 +27,7 @@ namespace AlbanianXrm.XrmToolBox.Shared
             UIThread = Thread.CurrentThread.ManagedThreadId;
         }
 
-        public void QueueWork(string message, Action work, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueWork(string message, Action work, Action<BackgroundWorkResult> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorker<object>()
             {
@@ -37,43 +37,7 @@ namespace AlbanianXrm.XrmToolBox.Shared
                 WorkFinished = workFinished
             });
         }
-
-        public void QueueWork(string message, Func<Task> work, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerAsync<object>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = async () => { await work(); return null; },
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<TProgress>(string message, Action<Reporter<TProgress>> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerProgress<object, TProgress>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = (reporter) => { work(reporter); return null; },
-                OnProgress = progress,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<TProgress>(string message, Func<Reporter<TProgress>, Task> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerProgressAsync<object, TProgress>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = async (reporter) => { await work(reporter); return null; },
-                OnProgress = progress,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<TResult>(string message, Func<TResult> work, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueWork<TResult>(string message, Func<TResult> work, Action<BackgroundWorkResult<TResult>> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorker<TResult>()
             {
@@ -83,43 +47,7 @@ namespace AlbanianXrm.XrmToolBox.Shared
                 WorkFinished = workFinished
             });
         }
-
-        public void QueueWork<TResult>(string message, Func<Task<TResult>> work, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerAsync<TResult>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = work,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<TResult, TProgress>(string message, Func<Reporter<TProgress>, TResult> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerProgress<TResult, TProgress>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = work,
-                OnProgress = progress,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<TResult, TProgress>(string message, Func<Reporter<TProgress>, Task<TResult>> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerProgressAsync<TResult, TProgress>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Message = message,
-                Work = work,
-                OnProgress = progress,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<T>(string message, Action<T> work, T argument, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueWork<T>(string message, Action<T> work, T argument, Action<BackgroundWorkResult<T, object>> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorkerFunc<T, object>()
             {
@@ -130,20 +58,41 @@ namespace AlbanianXrm.XrmToolBox.Shared
                 WorkFinished = workFinished
             });
         }
-
-        public void QueueWork<T>(string message, Func<T, Task> work, T argument, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueWork<T, TResult>(string message, Func<T, TResult> work, T argument, Action<BackgroundWorkResult<T, TResult>> workFinished = null)
         {
-            StartWorkAsync(new BackgroundWorkerFuncAsync<T, object>()
+            StartWorkAsync(new BackgroundWorkerFunc<T, TResult>()
             {
                 InternalWorkFinished = WorkAsyncEnded,
                 Argument = argument,
                 Message = message,
-                Work = async (arg) => { await work(arg); return null; },
+                Work = work,
                 WorkFinished = workFinished
             });
         }
-
-        public void QueueWork<T, TProgress>(string message, Action<T, Reporter<TProgress>> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
+      
+        public void EnqueueWork<TProgress>(string message, Action<Reporter<TProgress>> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerProgress<object, TProgress>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = (reporter) => { work(reporter); return null; },
+                OnProgress = progress,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueWork<TResult, TProgress>(string message, Func<Reporter<TProgress>, TResult> work, Action<TProgress> progress, Action<BackgroundWorkResult<TResult>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerProgress<TResult, TProgress>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = work,
+                OnProgress = progress,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueWork<T, TProgress>(string message, Action<T, Reporter<TProgress>> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult<T, object>> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorkerProgressFunc<T, object, TProgress>()
             {
@@ -155,45 +104,7 @@ namespace AlbanianXrm.XrmToolBox.Shared
                 WorkFinished = workFinished
             });
         }
-
-        public void QueueWork<T, TProgress>(string message, Func<T, Reporter<TProgress>, Task> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerProgressFuncAsync<T, object, TProgress>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Argument = argument,
-                Message = message,
-                Work = async (arg, reporter) => { await work(arg, reporter); return null; },
-                OnProgress = progress,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<T, TResult>(string message, Func<T, TResult> work, T argument, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerFunc<T, TResult>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Argument = argument,
-                Message = message,
-                Work = work,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<T, TResult>(string message, Func<T, Task<TResult>> work, T argument, Action<BackgroundWorkResult> workFinished = null)
-        {
-            StartWorkAsync(new BackgroundWorkerFuncAsync<T, TResult>()
-            {
-                InternalWorkFinished = WorkAsyncEnded,
-                Argument = argument,
-                Message = message,
-                Work = work,
-                WorkFinished = workFinished
-            });
-        }
-
-        public void QueueWork<T, TResult, TProgress>(string message, Func<T, Reporter<TProgress>, TResult> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueWork<T, TResult, TProgress>(string message, Func<T, Reporter<TProgress>, TResult> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult<T, TResult>> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorkerProgressFunc<T, TResult, TProgress>()
             {
@@ -206,7 +117,84 @@ namespace AlbanianXrm.XrmToolBox.Shared
             });
         }
 
-        public void QueueWork<T, TResult, TProgress>(string message, Func<T, Reporter<TProgress>, Task<TResult>> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
+        public void EnqueueAsyncWork(string message, Func<Task> work, Action<BackgroundWorkResult> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerAsync<object>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = async () => { await work(); return null; },
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<TResult>(string message, Func<Task<TResult>> work, Action<BackgroundWorkResult<TResult>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerAsync<TResult>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = work,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<T>(string message, Func<T, Task> work, T argument, Action<BackgroundWorkResult<T,object>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerFuncAsync<T, object>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Argument = argument,
+                Message = message,
+                Work = async (arg) => { await work(arg); return null; },
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<T, TResult>(string message, Func<T, Task<TResult>> work, T argument, Action<BackgroundWorkResult<T,TResult>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerFuncAsync<T, TResult>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Argument = argument,
+                Message = message,
+                Work = work,
+                WorkFinished = workFinished
+            });
+        }
+
+        public void EnqueueAsyncWork<TProgress>(string message, Func<Reporter<TProgress>, Task> work, Action<TProgress> progress, Action<BackgroundWorkResult> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerProgressAsync<object, TProgress>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = async (reporter) => { await work(reporter); return null; },
+                OnProgress = progress,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<TResult, TProgress>(string message, Func<Reporter<TProgress>, Task<TResult>> work, Action<TProgress> progress, Action<BackgroundWorkResult<TResult>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerProgressAsync<TResult, TProgress>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Message = message,
+                Work = work,
+                OnProgress = progress,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<T, TProgress>(string message, Func<T, Reporter<TProgress>, Task> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult<T,object>> workFinished = null)
+        {
+            StartWorkAsync(new BackgroundWorkerProgressFuncAsync<T, object, TProgress>()
+            {
+                InternalWorkFinished = WorkAsyncEnded,
+                Argument = argument,
+                Message = message,
+                Work = async (arg, reporter) => { await work(arg, reporter); return null; },
+                OnProgress = progress,
+                WorkFinished = workFinished
+            });
+        }
+        public void EnqueueAsyncWork<T, TResult, TProgress>(string message, Func<T, Reporter<TProgress>, Task<TResult>> work, T argument, Action<TProgress> progress, Action<BackgroundWorkResult<T,TResult>> workFinished = null)
         {
             StartWorkAsync(new BackgroundWorkerProgressFuncAsync<T, TResult, TProgress>()
             {

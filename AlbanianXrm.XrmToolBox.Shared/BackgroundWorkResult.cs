@@ -21,4 +21,15 @@ namespace AlbanianXrm.XrmToolBox.Shared
         }
         public T Value { get; internal set; }
     }
+
+    public class BackgroundWorkResult<T, TValue> : BackgroundWorkResult<TValue>
+    {
+        public BackgroundWorkResult(T argument, Exception exception) : base(exception) { this.Argument = argument; }
+
+        public BackgroundWorkResult(T argument, TValue value ) : base(value)
+        {
+            this.Argument = argument;
+        }
+        public T Argument { get; internal set; }
+    }
 }
