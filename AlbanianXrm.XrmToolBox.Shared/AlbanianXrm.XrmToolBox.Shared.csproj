@@ -17,6 +17,8 @@
     <Authors>Betim Beja</Authors>
     <Company>AlbanianXrm</Company>
     <Copyright>AlbanianXrm</Copyright>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>AlbanianXrm.XrmToolBox.Shared.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AlbanianXrm.XrmToolBox.Shared</id>
+    <version>$version$</version>
+    <title>AlbanianXrm.XrmToolBox.Shared</title>
+    <authors>Betim Beja</authors>
+    <owners>Betim Beja;AlbanianXrm</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/albanian-xrm/AlbanianXrm.XrmToolBox.Shared</projectUrl>
+    <repository type="git" url="https://github.com/albanian-xrm/AlbanianXrm.XrmToolBox.Shared" />
+    <iconUrl>https://raw.githubusercontent.com/albanian-xrm/AlbanianXrm.XrmToolBox.Shared/master/Logo_80x80.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package contains shared classes for building high quality tools for XrmToolBox.</description>
+    <releaseNotes>
+v$version$:
+- First release
+
+For older releases go here: https://github.com/albanian-xrm/Early-Bound/releases
+    </releaseNotes>
+    <copyright>Copyright 2021</copyright>
+    <tags>XrmToolBox Plugins Xrm AlbanianXrm BackgroundWorkHandler</tags>
+    <dependencies>
+      <dependency id="XrmToolBoxPackage" version="1.2020.11.42" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\net462\AlbanianXrm.XrmToolBox.Shared.dll" target="lib\net462\" />
+  </files>
+</package>

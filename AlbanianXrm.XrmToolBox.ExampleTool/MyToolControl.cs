@@ -2,7 +2,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
 
@@ -28,7 +27,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private void btnSyncAction_Click(object sender, EventArgs e)
         {
-            AsyncWorkHandler.QueueWork<string>($"Working Async {++numberOfClicks}" , Work, Progress, WorkEnded);
+            AsyncWorkHandler.QueueWork<string>($"Working Async {++numberOfClicks}", Work, Progress, WorkEnded);
         }
 
         private void Work(Reporter<string> reporter)
@@ -46,7 +45,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         private async Task WorkAsync(Reporter<string> reporter)
         {
             reporter.ReportProgress("started");
-           await Task.Delay(5000);
+            await Task.Delay(5000);
             reporter.ReportProgress("ending");
         }
 
