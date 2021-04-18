@@ -36,7 +36,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         }
 
         private void Work(Reporter<string> reporter)
-        {
+        {          
             reporter.ReportProgress("started");
             Thread.Sleep(5000);
             reporter.ReportProgress("ending");

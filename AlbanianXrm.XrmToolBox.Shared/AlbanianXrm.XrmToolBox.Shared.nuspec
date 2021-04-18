@@ -14,7 +14,7 @@
     <description>This package contains shared classes for building high quality tools for XrmToolBox.</description>
     <releaseNotes>
 v$version$:
-- First release
+- Fixed a problem when starting background work from outside the UI Thread. 
 
 For older releases go here: https://github.com/albanian-xrm/Early-Bound/releases
     </releaseNotes>

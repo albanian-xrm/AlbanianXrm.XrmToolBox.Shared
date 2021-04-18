@@ -17,7 +17,7 @@
     <Authors>Betim Beja</Authors>
     <Company>AlbanianXrm</Company>
     <Copyright>AlbanianXrm</Copyright>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>AlbanianXrm.XrmToolBox.Shared.snk</AssemblyOriginatorKeyFile>
     <Configurations>Debug;Release;Azure Pipelines</Configurations>
   </PropertyGroup>

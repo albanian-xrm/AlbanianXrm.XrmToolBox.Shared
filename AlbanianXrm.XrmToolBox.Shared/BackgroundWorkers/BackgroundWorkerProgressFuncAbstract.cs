@@ -1,27 +1,27 @@
 ﻿using System;
+using System.Threading;
 
 namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
 {
-    internal abstract class BackgroundWorkerProgressFuncAbstract<T,TValue, TProgress> : BackgroundWorkerBase
+    internal abstract class BackgroundWorkerProgressFuncAbstract<T, TValue, TProgress> : BackgroundWorker
     {
-        protected readonly IProgress<BackgroundWorkProgress<T, TValue, TProgress>> reporter;
+        public BackgroundWorkerProgressFuncAbstract(SynchronizationContext synchronizationContext) : base(synchronizationContext)
+        {
+            base.postCallback = new SendOrPostCallback(InternalProgress);
+        }
 
         public Action<TProgress> OnProgress { get; set; }
 
-        public Action<BackgroundWorkResult<T,TValue>> WorkFinished { get; set; }
-
-        public BackgroundWorkerProgressFuncAbstract()
-        {
-            reporter = new Progress<BackgroundWorkProgress<T,TValue, TProgress>>(InternalProgress);
-        }
+        public Action<BackgroundWorkResult<T, TValue>> WorkFinished { get; set; }
 
         protected void InternalProgress(TProgress progress)
         {
-            reporter.Report(new BackgroundWorkProgress<T,TValue, TProgress> (progress));
+            synchronizationContext.Post(postCallback, new BackgroundWorkProgress<T, TValue, TProgress>(progress));
         }
 
-        private void InternalProgress(BackgroundWorkProgress<T, TValue, TProgress> state)
+        private void InternalProgress(object stateObject)
         {
+            BackgroundWorkProgress<T, TValue, TProgress> state = (BackgroundWorkProgress<T, TValue, TProgress>)stateObject;
             try
             {
                 if (state.Finished)

@@ -6,6 +6,8 @@ namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
 {
     internal class BackgroundWorkerAsync<TResult> : BackgroundWorkerAbstract<TResult>
     {
+        public BackgroundWorkerAsync(SynchronizationContext synchronizationContext) : base(synchronizationContext) { }
+
         public Func<Task<TResult>> Work { get; internal set; }
 
         internal override void DoWork()
@@ -22,10 +24,10 @@ namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
             }
             catch (Exception e)
             {
-                progress.Report(new BackgroundWorkBase<TResult>(e));
+                synchronizationContext.Post(postCallback, new BackgroundWorkBase<TResult>(e));
                 return;
             }
-            progress.Report(new BackgroundWorkBase<TResult>(result));
+            synchronizationContext.Post(postCallback, new BackgroundWorkBase<TResult>(result));
             return;
         }
     }

@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Threading;
 
 namespace AlbanianXrm.XrmToolBox.Shared.BackgroundWorkers
 {
-    internal abstract class BackgroundWorkerAbstract<TResult> : BackgroundWorkerBase
+    internal abstract class BackgroundWorkerAbstract<TResult> : BackgroundWorker
     {
-        protected readonly IProgress<BackgroundWorkBase<TResult>> progress;
         public Action<BackgroundWorkResult<TResult>> WorkFinished { get; set; }
 
-        public BackgroundWorkerAbstract()
+        public BackgroundWorkerAbstract(SynchronizationContext synchronizationContext) : base(synchronizationContext)
         {
-            progress = new Progress<BackgroundWorkBase<TResult>>(InternalProgress);
+            this.postCallback = new SendOrPostCallback(InternalProgress);
         }
 
-        private void InternalProgress(BackgroundWorkBase<TResult> state)
+        private void InternalProgress(object stateObject)
         {
+            BackgroundWorkBase<TResult> state = (BackgroundWorkBase<TResult>)stateObject;
             if (state.Finished)
             {
                 try
