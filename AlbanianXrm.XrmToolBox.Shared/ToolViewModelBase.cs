@@ -14,6 +14,7 @@ namespace AlbanianXrm.XrmToolBox.Shared
             set
             {
                 if (_AllowRequests == value) return;
+                _AllowRequests = value;
                 AllowRequestsChanged();
                 NotifyPropertyChanged();
             }
