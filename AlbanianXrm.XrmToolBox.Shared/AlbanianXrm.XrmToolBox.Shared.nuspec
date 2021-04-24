@@ -14,14 +14,15 @@
     <description>This package contains shared classes for building high quality tools for XrmToolBox.</description>
     <releaseNotes>
 v$version$:
-- Fixed a problem when starting background work from outside the UI Thread. 
+- Separated AlbanianXrm.BackgroundWorker to a separate package. 
 
-For older releases go here: https://github.com/albanian-xrm/Early-Bound/releases
+For older releases go here: https://github.com/albanian-xrm/AlbanianXrm.XrmToolBox.Shared/releases
     </releaseNotes>
     <copyright>Copyright 2021</copyright>
     <tags>XrmToolBox Plugins Xrm AlbanianXrm BackgroundWorkHandler</tags>
     <dependencies>
       <dependency id="XrmToolBoxPackage" version="1.2020.11.42" />
+      <dependency id="AlbanianXrm.BackgroundWorker" version="1.2021.04.06" />
     </dependencies>
   </metadata>
   <files>

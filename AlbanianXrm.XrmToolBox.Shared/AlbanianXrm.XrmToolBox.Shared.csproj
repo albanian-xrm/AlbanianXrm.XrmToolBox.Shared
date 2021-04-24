@@ -56,7 +56,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="XrmToolBoxPackage" Version="1.2020.11.42" Link="Test" />
+    <PackageReference Include="XrmToolBoxPackage" Version="1.2020.11.42"  />
+    <PackageReference Include="AlbanianXrm.BackgroundWorker" Version="1.2021.04.06"  />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
