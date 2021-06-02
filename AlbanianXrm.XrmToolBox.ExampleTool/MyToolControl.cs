@@ -1,5 +1,4 @@
 ﻿using AlbanianXrm.BackgroundWorker;
-using AlbanianXrm.XrmToolBox.Shared;
 using AlbanianXrm.XrmToolBox.Shared.Extensions;
 using System;
 using System.Threading;
@@ -15,7 +14,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         public string UserName => throw new NotImplementedException();
 
-        private readonly BackgroundWorkHandler AsyncWorkHandler;
+        private readonly AlBackgroundWorkHandler AsyncWorkHandler;
         private readonly ToolViewModel toolViewModel;
         private int numberOfClicks = 0;
 
@@ -23,13 +22,13 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         {
             InitializeComponent();
             toolViewModel = new ToolViewModel();
-            AsyncWorkHandler = new BackgroundWorkHandler();
+            AsyncWorkHandler = new AlBackgroundWorkHandler();
         }
 
         private void BtnSyncI0R0W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-                BackgroundWorkerFactory
+                AlBackgroundWorkerFactory
                     .NewWorker<string>(Work, Progress, WorkEnded)
                     .WithMessage(this, $"Working Async {++numberOfClicks}")
                     .WithViewModel(toolViewModel)
@@ -38,15 +37,15 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private void Work(Reporter<string> reporter)
         {
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0,"started");
             Thread.Sleep(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100,"ending");
         }
 
         private void BtnSyncI1R0W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-              BackgroundWorkerFactory
+              AlBackgroundWorkerFactory
                   .NewWorker<string, string>(Work, "input", Progress, WorkEndedArgument)
                   .WithMessage(this, $"Working Async {++numberOfClicks}")
               );
@@ -55,15 +54,15 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         private void Work(string arg, Reporter<string> reporter)
         {
             System.Diagnostics.Debug.WriteLine("background " + arg);
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0, "started");
             Thread.Sleep(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100, "ending");
         }
 
         private void BtnSyncI0R1W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-                  BackgroundWorkerFactory
+                  AlBackgroundWorkerFactory
                       .NewWorker<string, string>(Work2, Progress, WorkEnded)
                       .WithMessage(this, $"Working Async {++numberOfClicks}")
                   );
@@ -71,16 +70,16 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private string Work2(Reporter<string> reporter)
         {
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0,"started");
             Thread.Sleep(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100,"ending");
             return "result";
         }
 
         private void BtnSyncI1R1W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-               BackgroundWorkerFactory
+               AlBackgroundWorkerFactory
                    .NewWorker<string, string, string>(Work2, "argument", Progress, WorkEnded)
                    .WithMessage(this, $"Working Async {++numberOfClicks}")
                );
@@ -88,16 +87,16 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private string Work2(string argument, Reporter<string> reporter)
         {
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0,"started");
             Thread.Sleep(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100,"ending");
             return "result";
         }
 
         private void BtnAsyncI0R0W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-            BackgroundWorkerFactory
+            AlBackgroundWorkerFactory
                 .NewAsyncWorker<string>(WorkAsync, Progress, WorkEnded)
                 .WithMessage(this, $"Working Async {++numberOfClicks}")
             );
@@ -105,15 +104,15 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private async Task WorkAsync(Reporter<string> reporter)
         {
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0,"started");
             await Task.Delay(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100,"ending");
         }
 
         private void BtnAsyncI1R0W_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-          BackgroundWorkerFactory
+            AlBackgroundWorkerFactory
               .NewAsyncWorker<string, string>(WorkAsync, "argument", Progress, WorkEnded)
               .WithMessage(this, $"Working Async {++numberOfClicks}")
           );
@@ -121,12 +120,12 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
 
         private async Task WorkAsync(string argument, Reporter<string> reporter)
         {
-            reporter.ReportProgress("started");
+            reporter.ReportProgress(0, "started");
             await Task.Delay(5000);
-            reporter.ReportProgress("ending");
+            reporter.ReportProgress(100, "ending");
         }
 
-        private void Progress(string progress)
+        private void Progress(int precentage, string progress)
         {
             listBox1.Items.Add(progress);
         }
@@ -134,7 +133,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         private void BtnSyncI0R0_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-                BackgroundWorkerFactory
+                AlBackgroundWorkerFactory
                     .NewWorker(Work, WorkEnded)
                     .WithMessage(this, $"Working No Input, No Output Async {++numberOfClicks}")
             );
@@ -148,7 +147,7 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
         private void BtnSyncI1R0_Click(object sender, EventArgs e)
         {
             AsyncWorkHandler.EnqueueBackgroundWork(
-             BackgroundWorkerFactory
+             AlBackgroundWorkerFactory
                  .NewWorker(Work, "argument", WorkEndedArgument)
                  .WithMessage(this, $"Working With Input, No Output Async {++numberOfClicks}")
             );
@@ -181,6 +180,6 @@ namespace AlbanianXrm.XrmToolBox.ExampleTool
             listBox1.Items.Add("ended");
         }
 
-      
+
     }
 }

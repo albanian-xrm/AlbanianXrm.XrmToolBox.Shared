@@ -1,11 +1,12 @@
-﻿using System.Windows.Forms;
+﻿using AlbanianXrm.BackgroundWorker;
+using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 
 namespace AlbanianXrm.XrmToolBox.Shared.Extensions
 {
     public static class BackgroundWorkerExtensions
     {
-        public static T WithMessage<T>(this T backgroundWorker, Control control, string message, int width = 340, int height = 150) where T : BackgroundWorker.BackgroundWorker
+        public static T WithMessage<T>(this T backgroundWorker, Control control, string message, int width = 340, int height = 150) where T : AlBackgroundWorker
         {
             backgroundWorker.OnBeforeStart += () =>
             {
@@ -22,7 +23,7 @@ namespace AlbanianXrm.XrmToolBox.Shared.Extensions
             return backgroundWorker;
         }
 
-        public static T WithViewModel<T>(this T backgroundWorker, ToolViewModelBase viewModelBase) where T : BackgroundWorker.BackgroundWorker
+        public static T WithViewModel<T>(this T backgroundWorker, ToolViewModelBase viewModelBase) where T : AlBackgroundWorker
         {
             backgroundWorker.OnBeforeStart += () =>
             {
